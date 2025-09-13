@@ -1,0 +1,25 @@
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "allocation_proto",
+    srcs = ["allocation.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//google/api:api_proto",
+        "//grpc-gateway/protoc-gen-openapiv2/options:options_proto",
+        "@com_google_protobuf//:wrappers_proto",
+    ],
+)
+
+go_proto_library(
+    name = "allocation_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "./allocation",
+    proto = ":allocation_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//google/api:annotations_proto",
+        "//grpc-gateway/protoc-gen-openapiv2/options:annotations_proto",
+    ],
+)
